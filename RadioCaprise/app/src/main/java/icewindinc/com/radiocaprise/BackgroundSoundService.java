@@ -18,7 +18,6 @@ import java.io.IOException;
  */
 
 public class BackgroundSoundService extends Service {
-    private boolean isRunning  = false;
     private static final String TAG = "RadioCapriseService";
     private MediaPlayer mediaPlayer;
     private String stream;
@@ -35,16 +34,15 @@ public class BackgroundSoundService extends Service {
         Log.i(TAG, "Service onStartCommand");
 
         Bundle extras = intent.getExtras();
+
         if(extras == null)
-            Log.d("Service","null");
+            Log.d(TAG," Started without stream extra value!");
         else
         {
-            Log.d("Service","not null");
             String from = (String) extras.get("stream");
-            Log.d("service", from);
+            Log.d(TAG, from);
             stream = from;
         }
-
 
         new Thread(new Runnable() {
             @Override
@@ -57,7 +55,7 @@ public class BackgroundSoundService extends Service {
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
-                            Log.d("Service", "Player prepared. starting to play.");
+                            Log.d(TAG, "Player prepared. starting to play.");
                             mediaPlayer.start();
                         }
                     });
@@ -73,7 +71,7 @@ public class BackgroundSoundService extends Service {
 
     @Override
     public void onDestroy() {
-        Log.d("Service", "Stopping player");
+        Log.d(TAG, "Stopping player");
         mediaPlayer.stop();
         mediaPlayer.release();
     }

@@ -12,13 +12,12 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <!--Service declared in manifest -->
-        <service android:name=".BackgroundSoundService"
-            android:exported="false"/>
+        <service android:name=".BackgroundSoundService" android:exported="false"/>
+        <service android:name=".NotificationService" />
     </application>
 
 </manifest>
