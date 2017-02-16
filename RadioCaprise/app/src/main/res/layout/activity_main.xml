@@ -18,7 +18,7 @@
         app:srcCompat="@mipmap/hardcore"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/imageView"
+        android:id="@+id/stationPicture"
         android:layout_alignParentEnd="true"
         tools:alpha="0.5" />
 
@@ -35,7 +35,7 @@
         android:text="Hopeless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
+        android:id="@+id/artistValue"
         android:layout_below="@+id/textView"
         android:layout_alignEnd="@+id/textView"
         android:textColor="@color/white" />
@@ -44,31 +44,31 @@
         android:text="song number one"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView4"
-        android:layout_alignStart="@+id/textView4"
-        android:id="@+id/textView5"
+        android:layout_below="@+id/artistValue"
+        android:layout_alignStart="@+id/artistValue"
+        android:id="@+id/songValue"
         android:textColor="@color/white" />
 
     <TextView
         android:text="metal/hardcore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView7"
+        android:id="@+id/genreValue"
         android:textColor="@color/white"
-        android:layout_alignBaseline="@+id/textView6"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignStart="@+id/textView4"
+        android:layout_alignBaseline="@+id/genre"
+        android:layout_alignBottom="@+id/genre"
+        android:layout_alignStart="@+id/artistValue"
         android:textSize="18sp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/Forward"
-        android:id="@+id/imageButton3"
+        app:srcCompat="@mipmap/forward"
+        android:id="@+id/forward"
         style="@style/Widget.AppCompat.ImageButton"
         android:background="@color/black"
         android:tint="@color/white"
-        android:layout_alignTop="@+id/imageButton"
+        android:layout_alignTop="@+id/play"
         android:layout_alignParentEnd="true"
         android:scaleX="0.5"
         android:scaleY="0.5" />
@@ -77,29 +77,29 @@
         android:text="HARDCORE"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView9"
+        android:id="@+id/stationValue"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:layout_alignBaseline="@+id/textView8"
-        android:layout_alignBottom="@+id/textView8"
-        android:layout_alignStart="@+id/imageButton" />
+        android:layout_alignBaseline="@+id/station"
+        android:layout_alignBottom="@+id/station"
+        android:layout_alignStart="@+id/play" />
 
     <TextView
         android:text="station:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView8"
+        android:id="@+id/station"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_marginBottom="27dp"
-        android:layout_above="@+id/imageButton6"
-        android:layout_toEndOf="@+id/imageButton5" />
+        android:layout_above="@+id/favouriteStar"
+        android:layout_toEndOf="@+id/backward" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/Star"
-        android:id="@+id/imageButton6"
+        app:srcCompat="@mipmap/star"
+        android:id="@+id/favouriteStar"
         android:background="@color/transparent"
         android:tint="@color/white"
         android:layout_above="@+id/textView"
@@ -110,37 +110,37 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/Backward"
-        android:id="@+id/imageButton5"
+        app:srcCompat="@mipmap/backward"
+        android:id="@+id/backward"
         style="@style/Widget.AppCompat.ImageButton"
         android:tint="@color/white"
         android:background="@color/black"
         android:scaleX="0.5"
         android:scaleY="0.5"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/imageButton7" />
+        android:layout_below="@+id/mute" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/Play"
-        android:id="@+id/imageButton"
+        app:srcCompat="@mipmap/play"
+        android:id="@+id/play"
         android:background="@color/black"
         style="@style/Widget.AppCompat.ImageButton"
         android:tint="@color/white"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageButton6" />
+        android:layout_alignStart="@+id/favouriteStar" />
 
     <ImageButton
         android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/Mute"
-        android:id="@+id/imageButton7"
+        app:srcCompat="@mipmap/mute"
+        android:id="@+id/mute"
         android:tint="@color/white"
         android:background="@color/black"
         android:layout_width="wrap_content"
         android:scaleX="0.5"
         android:scaleY="0.5"
-        android:layout_above="@+id/imageButton3"
+        android:layout_above="@+id/forward"
         android:layout_alignParentStart="true" />
 
     <SeekBar
@@ -152,39 +152,39 @@
         android:id="@+id/seekBar"
         android:tickMarkTint="@color/white"
         android:backgroundTint="@color/white"
-        android:layout_above="@+id/imageButton"
+        android:layout_above="@+id/play"
         android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/imageButton5"
-        android:layout_alignTop="@+id/imageButton7" />
+        android:layout_toEndOf="@+id/backward"
+        android:layout_alignTop="@+id/mute" />
 
     <TextView
         android:text="song:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/song"
         android:textColor="@color/white"
-        android:layout_below="@+id/textView2"
-        android:layout_toEndOf="@+id/imageButton7" />
+        android:layout_below="@+id/artist"
+        android:layout_toEndOf="@+id/mute" />
 
     <TextView
         android:text="genre:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:id="@+id/textView6"
+        android:id="@+id/genre"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/textView8" />
+        android:layout_alignStart="@+id/station" />
 
     <TextView
         android:text="artist:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView2"
+        android:id="@+id/artist"
         android:textColor="@color/white"
-        android:layout_alignBaseline="@+id/textView4"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignStart="@+id/textView3" />
+        android:layout_alignBaseline="@+id/artistValue"
+        android:layout_alignBottom="@+id/artistValue"
+        android:layout_alignStart="@+id/song" />
 
 </RelativeLayout>
