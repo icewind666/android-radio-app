@@ -2,10 +2,13 @@ package icewindinc.com.radiocaprise;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 
 import com.koushikdutta.ion.Ion;
 
@@ -29,7 +32,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        DrawerLayout mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ListView mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
+        // Set the adapter for the list view
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+         //       R.layout.drawer_list_item, mPlanetTitles));
 
         play = (ImageButton) findViewById(R.id.play);
 
