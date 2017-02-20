@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,202 +10,199 @@
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="icewindinc.com.radiocaprise.MainActivity"
-    android:background="@color/black">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/hardcore"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/stationPicture"
-        android:layout_alignParentEnd="true"
-        tools:alpha="0.5" />
+        <RelativeLayout
+            android:id="@+id/activity_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="icewindinc.com.radiocaprise.MainActivity"
+            android:background="@color/black">
 
-    <TextView
-        android:text="on air:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        android:textColor="@color/white"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/hardcore"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/stationPicture"
+                android:layout_alignParentEnd="true"
+                tools:alpha="0.3" />
 
-    <TextView
-        android:text="Hopeless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/artistValue"
-        android:layout_below="@+id/textView"
-        android:layout_alignEnd="@+id/textView"
-        android:textColor="@color/white" />
+            <TextView
+                android:text="on air:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView"
+                android:textColor="@color/white"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:text="song number one"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/artistValue"
-        android:layout_alignStart="@+id/artistValue"
-        android:id="@+id/songValue"
-        android:textColor="@color/white" />
+            <TextView
+                android:text="Hopeless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/artistValue"
+                android:layout_below="@+id/textView"
+                android:layout_alignEnd="@+id/textView"
+                android:textColor="@color/white" />
 
-    <TextView
-        android:text="metal/hardcore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/genreValue"
-        android:textColor="@color/white"
-        android:layout_alignBaseline="@+id/genre"
-        android:layout_alignBottom="@+id/genre"
-        android:layout_alignStart="@+id/artistValue"
-        android:textSize="18sp" />
+            <TextView
+                android:text="song number one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/artistValue"
+                android:layout_alignStart="@+id/artistValue"
+                android:id="@+id/songValue"
+                android:textColor="@color/white" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/forward"
-        android:id="@+id/forward"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:background="@color/black"
-        android:tint="@color/white"
-        android:layout_alignTop="@+id/play"
-        android:layout_alignParentEnd="true"
-        android:scaleX="0.5"
-        android:scaleY="0.5" />
+            <TextView
+                android:text="metal/hardcore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/genreValue"
+                android:textColor="@color/white"
+                android:layout_alignBaseline="@+id/genre"
+                android:layout_alignBottom="@+id/genre"
+                android:layout_alignStart="@+id/artistValue"
+                android:textSize="18sp" />
 
-    <TextView
-        android:text="HARDCORE"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/stationValue"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:layout_alignBaseline="@+id/station"
-        android:layout_alignBottom="@+id/station"
-        android:layout_alignStart="@+id/play" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/forward"
+                android:id="@+id/forward"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:background="@color/black"
+                android:tint="@color/white"
+                android:layout_alignTop="@+id/play"
+                android:layout_alignParentEnd="true"
+                android:scaleX="0.5"
+                android:scaleY="0.5" />
 
-    <TextView
-        android:text="station:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/station"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:layout_marginBottom="27dp"
-        android:layout_above="@+id/favouriteStar"
-        android:layout_toEndOf="@+id/backward" />
+            <TextView
+                android:text="HARDCORE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stationValue"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:layout_alignBaseline="@+id/station"
+                android:layout_alignBottom="@+id/station"
+                android:layout_alignStart="@+id/play" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/star"
-        android:id="@+id/favouriteStar"
-        android:background="@color/transparent"
-        android:tint="@color/white"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
-        tools:scaleX="0.5"
-        android:scaleY="0.5" />
+            <TextView
+                android:text="station:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/station"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_marginBottom="27dp"
+                android:layout_above="@+id/favouriteStar"
+                android:layout_toEndOf="@+id/backward" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/backward"
-        android:id="@+id/backward"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:tint="@color/white"
-        android:background="@color/black"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/mute" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/backward"
+                android:id="@+id/backward"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:tint="@color/white"
+                android:background="@color/black"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/mute" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/play"
-        android:id="@+id/play"
-        android:background="@color/black"
-        style="@style/Widget.AppCompat.ImageButton"
-        android:tint="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/favouriteStar" />
+            <ImageButton
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/mute"
+                android:id="@+id/mute"
+                android:tint="@color/white"
+                android:background="@color/black"
+                android:layout_width="wrap_content"
+                android:scaleX="0.5"
+                android:scaleY="0.5"
+                android:layout_above="@+id/forward"
+                android:layout_alignParentStart="true" />
 
-    <ImageButton
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/mute"
-        android:id="@+id/mute"
-        android:tint="@color/white"
-        android:background="@color/black"
-        android:layout_width="wrap_content"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:layout_above="@+id/forward"
-        android:layout_alignParentStart="true" />
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="50"
+                android:id="@+id/seekBar"
+                android:tickMarkTint="@color/white"
+                android:backgroundTint="@color/white"
+                android:layout_above="@+id/play"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/backward"
+                android:layout_alignTop="@+id/mute" />
 
-    <SeekBar
-        style="@style/Widget.AppCompat.SeekBar.Discrete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="50"
-        android:id="@+id/seekBar"
-        android:tickMarkTint="@color/white"
-        android:backgroundTint="@color/white"
-        android:layout_above="@+id/play"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@+id/backward"
-        android:layout_alignTop="@+id/mute" />
+            <TextView
+                android:text="song:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/song"
+                android:textColor="@color/white"
+                android:layout_below="@+id/artist"
+                android:layout_toEndOf="@+id/mute" />
 
-    <TextView
-        android:text="song:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/song"
-        android:textColor="@color/white"
-        android:layout_below="@+id/artist"
-        android:layout_toEndOf="@+id/mute" />
+            <TextView
+                android:text="genre:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:id="@+id/genre"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_alignParentTop="true"
+                android:layout_alignStart="@+id/station" />
 
-    <TextView
-        android:text="genre:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:id="@+id/genre"
-        android:textColor="@color/white"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/station" />
+            <TextView
+                android:text="artist:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/artist"
+                android:textColor="@color/white"
+                android:layout_alignBaseline="@+id/artistValue"
+                android:layout_alignBottom="@+id/artistValue"
+                android:layout_alignStart="@+id/song" />
 
-    <TextView
-        android:text="artist:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/artist"
-        android:textColor="@color/white"
-        android:layout_alignBaseline="@+id/artistValue"
-        android:layout_alignBottom="@+id/artistValue"
-        android:layout_alignStart="@+id/song" />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_star_border_white_24dp"
+                android:id="@+id/favouriteStar"
+                android:background="@color/transparent"
+                android:tint="@color/white"
+                android:layout_above="@+id/textView"
+                android:layout_centerHorizontal="true" />
 
-</RelativeLayout>
-        </FrameLayout>
-    <ListView android:id="@+id/left_drawer"
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/play"
+                android:id="@+id/play"
+                android:background="@color/black"
+                style="@style/Widget.AppCompat.ImageButton"
+                android:tint="@color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+        </RelativeLayout>
+    </FrameLayout>
+    <ExpandableListView android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
-        android:background="@color/background_grey"/>
+        android:background="#4c4a4b"/>
 </android.support.v4.widget.DrawerLayout>

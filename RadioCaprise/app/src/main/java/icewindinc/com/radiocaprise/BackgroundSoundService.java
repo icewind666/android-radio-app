@@ -9,8 +9,15 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * BackgroundSoundService for playing stream in background mode
@@ -49,9 +56,19 @@ public class BackgroundSoundService extends Service {
             public void run() {
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                Map<String, String> headers = new HashMap<String, String>();
+                headers.put("cookie", "beget=begetok");
+
 
                 try {
-                    mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(Uri.encode(stream)));
+                    //stream = "http://79.120.39.202:9069";
+                    stream = "http://usa8-vn.mixstream.net:8138";
+                    //query = URLEncoder.encode(your_query_string, "utf-8");
+                    URL url = new URL(stream);
+                    Log.d("media", url.toURI().toString());
+                    Uri parsed = Uri.parse(url.toURI().toString());
+                    Log.d("media", parsed.toString());
+                    mediaPlayer.setDataSource(getApplicationContext(), parsed, headers);
                     mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                         @Override
                         public void onPrepared(MediaPlayer mp) {
@@ -59,8 +76,63 @@ public class BackgroundSoundService extends Service {
                             mediaPlayer.start();
                         }
                     });
+
+                    mediaPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
+                        @Override
+                        public boolean onError(MediaPlayer mp, int what, int extra) {
+                            switch(what) {
+                                case MediaPlayer.MEDIA_ERROR_TIMED_OUT:
+                                    Log.d("media", "TIMEOUT");
+                                    break;
+                                case MediaPlayer.MEDIA_ERROR_MALFORMED:
+                                    Log.d("media", "MALFORMED");
+                                    break;
+                                case MediaPlayer.MEDIA_ERROR_UNSUPPORTED:
+                                    Log.d("media", "UNSUPPORTED");
+                                    break;
+                                case MediaPlayer.MEDIA_ERROR_IO:
+                                    Log.d("media", "IO error");
+                                    break;
+                                case MediaPlayer.MEDIA_ERROR_SERVER_DIED:
+                                    Log.d("media", "SERVER DIED");
+                                    break;
+                                case MediaPlayer.MEDIA_ERROR_UNKNOWN:
+                                    Log.d("media", "UNKNOWN ERROR!");
+                                    break;
+
+
+                                default:
+                                    Log.d("media", "ErrorErrorErrorErrorErrorError");
+                            }
+                            return false;
+                        }
+                    });
+
+                    mediaPlayer.setOnBufferingUpdateListener(new MediaPlayer.OnBufferingUpdateListener(){
+                        public void onBufferingUpdate(MediaPlayer mPlayer, int percent) {
+                            Log.d("media"," Mediaplayer ready (preparation done). Inside buffer listener");
+                            Log.d("media", "Buffered " + percent + " %");
+                        }
+                    });
+
+                    mediaPlayer.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+                        @Override
+                        public boolean onInfo(MediaPlayer mp, int what, int extra) {
+                            switch (what) {
+                                case MediaPlayer.MEDIA_INFO_BUFFERING_START:
+                                    Toast.makeText(getApplicationContext(), "Start buffering", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case MediaPlayer.MEDIA_INFO_BUFFERING_END:
+                                    Toast.makeText(getApplicationContext(), "Stop buffering", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                            return false;
+                        }
+                    });
                     mediaPlayer.prepareAsync();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (URISyntaxException e) {
                     e.printStackTrace();
                 }
             }
