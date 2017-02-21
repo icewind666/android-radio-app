@@ -1,7 +1,9 @@
 package icewindinc.com.radiocaprise;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +19,7 @@ import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
         expListView = (ExpandableListView) findViewById(R.id.left_drawer);
 
         // preparing list data
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
 
         // setting list adapter
-        expListView.setAdapter(listAdapter);
+
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 
             @Override
@@ -119,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        expListView.setAdapter(listAdapter);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -154,7 +158,47 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
+        attachVolumeControl();
     }
+
+    private void attachVolumeControl() {
+        final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        int a = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
+        int c = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+        final TextView percentValue = (TextView) findViewById(R.id.percentValue);
+        final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
+
+        seekBar.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                audioManager.setStreamVolume(AudioManager.STREAM_RING, (int) (Integer.parseInt(percentValue.getText().toString().trim())), 0);
+                seekBar.setProgress((int) (Integer.parseInt(percentValue.getText().toString().trim())));
+            }
+        });
+
+        seekBar.setMax(a);
+        seekBar.setProgress(c);
+        percentValue.setText("" + c);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar arg0) {
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar arg0) {
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
+                audioManager.setStreamVolume(AudioManager.STREAM_RING, arg1, 0);
+                percentValue.setText("" + seekBar.getProgress());
+            }
+        });
+    }
+
 
     /**
      * Loads station to main view.

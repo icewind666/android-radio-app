@@ -42,33 +42,14 @@
                 android:layout_centerHorizontal="true" />
 
             <TextView
-                android:text="Hopeless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/artistValue"
-                android:layout_below="@+id/textView"
-                android:layout_alignEnd="@+id/textView"
-                android:textColor="@color/white" />
-
-            <TextView
                 android:text="song number one"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/artistValue"
                 android:layout_alignStart="@+id/artistValue"
                 android:id="@+id/songValue"
-                android:textColor="@color/white" />
-
-            <TextView
-                android:text="metal/hardcore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/genreValue"
                 android:textColor="@color/white"
-                android:layout_alignBaseline="@+id/genre"
-                android:layout_alignBottom="@+id/genre"
-                android:layout_alignStart="@+id/artistValue"
-                android:textSize="18sp" />
+                android:layout_alignParentEnd="true" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -82,17 +63,6 @@
                 android:layout_alignParentEnd="true"
                 android:scaleX="0.5"
                 android:scaleY="0.5" />
-
-            <TextView
-                android:text="HARDCORE"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/stationValue"
-                android:textColor="@color/white"
-                android:textSize="30sp"
-                android:layout_alignBaseline="@+id/station"
-                android:layout_alignBottom="@+id/station"
-                android:layout_alignStart="@+id/play" />
 
             <TextView
                 android:text="station:"
@@ -140,9 +110,9 @@
                 android:tickMarkTint="@color/white"
                 android:backgroundTint="@color/white"
                 android:layout_above="@+id/play"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@+id/backward"
-                android:layout_alignTop="@+id/mute" />
+                android:layout_alignTop="@+id/mute"
+                android:layout_alignEnd="@+id/stationValue"
+                android:layout_toEndOf="@+id/backward" />
 
             <TextView
                 android:text="song:"
@@ -194,6 +164,52 @@
                 android:tint="@color/white"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:text="50"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/percentValue"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textAlignment="center"
+                android:layout_marginTop="17dp"
+                android:layout_alignTop="@+id/seekBar"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/seekBar" />
+
+            <TextView
+                android:text="Hopeless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/artistValue"
+                android:textColor="@color/white"
+                android:layout_below="@+id/textView"
+                android:layout_alignParentEnd="true"
+                android:layout_toEndOf="@+id/station" />
+
+            <TextView
+                android:text="metal/hardcore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/genreValue"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_alignStart="@+id/favouriteStar"
+                android:layout_alignBottom="@+id/genre"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:text="HARDCORE"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/stationValue"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:layout_alignBaseline="@+id/station"
+                android:layout_alignBottom="@+id/station"
+                android:layout_toEndOf="@+id/textView"
+                android:layout_alignStart="@+id/favouriteStar" />
 
         </RelativeLayout>
     </FrameLayout>
