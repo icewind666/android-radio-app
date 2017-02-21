@@ -2,15 +2,14 @@ package icewindinc.com.radiocaprise;
 
 import android.app.Service;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.IOException;
+
+import wseemann.media.FFmpegMediaPlayer;
 
 /**
  * BackgroundSoundService for playing stream in background mode
@@ -19,7 +18,7 @@ import java.io.IOException;
 
 public class BackgroundSoundService extends Service {
     private static final String TAG = "RadioCapriseService";
-    private MediaPlayer mediaPlayer;
+    private FFmpegMediaPlayer mp;
     private String stream;
 
 
@@ -47,24 +46,31 @@ public class BackgroundSoundService extends Service {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+                mp = new FFmpegMediaPlayer();
+                mp.setOnPreparedListener(new FFmpegMediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(FFmpegMediaPlayer mp) {
+                        mp.start();
+                    }
+                });
+                mp.setOnErrorListener(new FFmpegMediaPlayer.OnErrorListener() {
+                    @Override
+                    public boolean onError(FFmpegMediaPlayer mp, int what, int extra) {
+                        mp.release();
+                        Log.d("media-player", "Player error! Releasing");
+                        return false;
+                    }
+                });
 
                 try {
-                    mediaPlayer.setDataSource(getApplicationContext(), Uri.parse(Uri.encode(stream)));
-                    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-                        @Override
-                        public void onPrepared(MediaPlayer mp) {
-                            Log.d(TAG, "Player prepared. starting to play.");
-                            mediaPlayer.start();
-                        }
-                    });
-                    mediaPlayer.prepareAsync();
-                } catch (IOException e) {
+                    mp.setDataSource(stream);
+                    mp.prepareAsync();
+                } catch (IllegalArgumentException | SecurityException | IOException | IllegalStateException e) {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }
+        ).start();
 
         return Service.START_STICKY;
     }
@@ -72,8 +78,8 @@ public class BackgroundSoundService extends Service {
     @Override
     public void onDestroy() {
         Log.d(TAG, "Stopping player");
-        mediaPlayer.stop();
-        mediaPlayer.release();
+        mp.stop();
+        mp.release();
     }
 
 }
