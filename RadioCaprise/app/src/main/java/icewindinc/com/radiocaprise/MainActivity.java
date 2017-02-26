@@ -1,6 +1,5 @@
 package icewindinc.com.radiocaprise;
 
-import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     BackgroundSoundService mService;
     boolean mBound = false;
+    int previousVolume;
 
 
     /**
@@ -199,14 +199,23 @@ public class MainActivity extends AppCompatActivity {
                 percentValue.setText("" + seekBar.getProgress());
             }
         });
-        ImageButton muteBtn = (ImageButton) findViewById(R.id.mute);
+        final ImageButton muteBtn = (ImageButton) findViewById(R.id.mute);
+
         muteBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // TODO Auto-generated method stub
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
-                seekBar.setProgress(0);
+                if(seekBar.getProgress() == 0) {
+                    seekBar.setProgress(previousVolume);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, previousVolume, 0);
+                    muteBtn.setImageResource(R.mipmap.mute);
+                }
+                else {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                    previousVolume = Integer.parseInt(percentValue.getText().toString().trim());
+                    seekBar.setProgress(0);
+                    muteBtn.setImageResource(R.mipmap.volume_off);
+                }
             }
         });
     }
