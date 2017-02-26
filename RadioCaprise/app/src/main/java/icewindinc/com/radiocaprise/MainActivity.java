@@ -1,33 +1,27 @@
 package icewindinc.com.radiocaprise;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.koushikdutta.ion.Ion;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
     ExpandableListAdapter listAdapter;
     HashMap<String, List<String>> listDataChild;
     ArrayList<String> listDataHeader;
+
+    BackgroundSoundService mService;
+    boolean mBound = false;
 
 
     /**
@@ -139,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
 
         play = (ImageButton) findViewById(R.id.play);
 
+
+
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -147,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     stopService(intent);
                     stopMusicService();
                     started = false;
+                    play.setImageResource(R.mipmap.play);
 
                 } else {
                     Intent intent = new Intent(MainActivity.this, BackgroundSoundService.class);
@@ -154,18 +154,20 @@ public class MainActivity extends AppCompatActivity {
                     startService(intent);
                     started = true;
                     startMusicService(play);
+
+                    // change icon
+                    play.setImageResource(R.mipmap.pause);
                 }
             }
         });
-        //mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         attachVolumeControl();
     }
 
     private void attachVolumeControl() {
         final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        int a = audioManager.getStreamMaxVolume(AudioManager.STREAM_RING);
-        int c = audioManager.getStreamVolume(AudioManager.STREAM_RING);
+        int a = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int c = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
         final TextView percentValue = (TextView) findViewById(R.id.percentValue);
         final SeekBar seekBar = (SeekBar) findViewById(R.id.seekBar);
 
@@ -174,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View arg0) {
                 // TODO Auto-generated method stub
-                audioManager.setStreamVolume(AudioManager.STREAM_RING, (int) (Integer.parseInt(percentValue.getText().toString().trim())), 0);
-                seekBar.setProgress((int) (Integer.parseInt(percentValue.getText().toString().trim())));
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, Integer.parseInt(percentValue.getText().toString().trim()), 0);
+                seekBar.setProgress(Integer.parseInt(percentValue.getText().toString().trim()));
             }
         });
 
@@ -193,11 +195,22 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
-                audioManager.setStreamVolume(AudioManager.STREAM_RING, arg1, 0);
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, arg1, 0);
                 percentValue.setText("" + seekBar.getProgress());
             }
         });
+        ImageButton muteBtn = (ImageButton) findViewById(R.id.mute);
+        muteBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                // TODO Auto-generated method stub
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
+                seekBar.setProgress(0);
+            }
+        });
     }
+
 
 
     /**
@@ -270,6 +283,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void stopMusicService() {
         metadataReceiverTimer.cancel();
+
+        // stopping notify bar service
         stopService(new Intent(MainActivity.this, NotificationService.class));
     }
 

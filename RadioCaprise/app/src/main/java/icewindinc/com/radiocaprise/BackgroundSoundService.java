@@ -2,6 +2,7 @@ package icewindinc.com.radiocaprise;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
@@ -20,12 +21,29 @@ public class BackgroundSoundService extends Service {
     private static final String TAG = "RadioCapriseService";
     private FFmpegMediaPlayer mp;
     private String stream;
+    // Binder given to clients
+    private final IBinder mBinder = new LocalBinder();
 
+
+    public class LocalBinder extends Binder {
+        BackgroundSoundService getService() {
+            // Return this instance of LocalService so clients can call public methods
+            return BackgroundSoundService.this;
+        }
+    }
+    /**
+     *
+     */
+    public void setVolume(int value) {
+        if (mp != null) {
+            mp.setVolume((float)value, (float)value);
+        }
+    }
 
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
-        return null;
+        return mBinder;
     }
 
     @Override
@@ -64,6 +82,7 @@ public class BackgroundSoundService extends Service {
 
                 try {
                     mp.setDataSource(stream);
+
                     mp.prepareAsync();
                 } catch (IllegalArgumentException | SecurityException | IOException | IllegalStateException e) {
                     e.printStackTrace();
