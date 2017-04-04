@@ -1,5 +1,7 @@
 package icewindinc.com.radiocaprise;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -11,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Retrieving meta data for songs
  * Created by icewind on 19.02.17.
  */
 
@@ -22,7 +25,6 @@ public class IcyStreamMeta {
 
     public IcyStreamMeta(URL streamUrl) {
         setStreamUrl(streamUrl);
-
         isError = false;
     }
 
@@ -77,7 +79,12 @@ public class IcyStreamMeta {
         con.setRequestProperty("Icy-MetaData", "1");
         con.setRequestProperty("Connection", "close");
         con.setRequestProperty("Accept", null);
-        con.connect();
+        try {
+            con.connect();
+        }
+        catch (android.os.NetworkOnMainThreadException ex) {
+            Log.e("radio-app-meta", "Error. Cant connect for receiving metadata");
+        }
 
         int metaDataOffset = 0;
         Map<String, List<String>> headers = con.getHeaderFields();

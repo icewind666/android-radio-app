@@ -33,7 +33,7 @@ import java.util.TimerTask;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private String stream = "";
+    private String stream;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ArrayList<Genre> genres;
@@ -49,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     BackgroundSoundService mService;
     boolean mBound = false;
     int previousVolume;
+    private ArrayList<CapriseStation> payedUserStations;
+
 
 
     /**
@@ -70,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             listDataHeader = new ArrayList<>();
             listDataChild = new HashMap<>();
 
-            genres = CapriseResources.readAll(getApplicationContext(), R.raw.stations);
+            filterStationsListAvailable();
 
             for (Genre genre : genres) {
                 listDataHeader.add(genre.name);
@@ -88,39 +90,54 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void filterStationsListAvailable() throws IOException {
+        ArrayList<Genre> genreList = CapriseResources.readAll(getApplicationContext(), R.raw.stations);
+        for (Genre stationsList : genres) {
+            //if (payedUserStations.)
+            //TODO: show only payed stations
+        }
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        stream = "";
         setContentView(R.layout.activity_main);
+
+        requestUserPayments();
 
         expListView = (ExpandableListView) findViewById(R.id.left_drawer);
 
         // preparing list data
         prepareListData();
-
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-
         // setting list adapter
-
         expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 String stationName = listDataChild.get(listDataHeader.get(groupPosition)).get(
                                 childPosition);
-
                 CapriseStation stationObj = CapriseResources.findStationByName(stationName, genres);
-
                 loadSelectedStation(stationObj);
                 mDrawerLayout.closeDrawer(expListView);
                 return false;
             }
         });
-
         expListView.setAdapter(listAdapter);
+        setSliderPanel();
+        setPlayButton();
+        attachVolumeControl();
+    }
+
+    private void requestUserPayments() {
+        payedUserStations = new ArrayList<>();
+        //TODO: implement
+    }
+
+    private void setSliderPanel() {
+        // setting slide panel
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         actionBarDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -132,12 +149,19 @@ public class MainActivity extends AppCompatActivity {
         // Set actionBarDrawerToggle as the DrawerListener
         mDrawerLayout.addDrawerListener(actionBarDrawerToggle);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // this if for icon changing in slide panel : opened/closed
+        try {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        catch (NullPointerException ex) {
+            Log.d("radio", "Error: getSupportActionBar() returned null");
+        }
 
+
+    }
+
+    private void setPlayButton() {
         play = (ImageButton) findViewById(R.id.play);
-
-
-
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,8 +184,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        attachVolumeControl();
     }
 
     private void attachVolumeControl() {
@@ -184,6 +206,8 @@ public class MainActivity extends AppCompatActivity {
         seekBar.setMax(a);
         seekBar.setProgress(c);
         percentValue.setText("" + c);
+        final ImageButton muteBtn = (ImageButton) findViewById(R.id.mute);
+
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onStopTrackingTouch(SeekBar arg0) {
@@ -196,10 +220,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar arg0, int arg1, boolean arg2) {
                 audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, arg1, 0);
+                if (arg1 != 0) {
+                    muteBtn.setImageResource(R.mipmap.ic_volume_up_black_48dp);
+                }
+                else {
+                    muteBtn.setImageResource(R.mipmap.ic_volume_mute_black_48dp);
+                }
                 percentValue.setText("" + seekBar.getProgress());
             }
         });
-        final ImageButton muteBtn = (ImageButton) findViewById(R.id.mute);
+
 
         muteBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -208,13 +238,13 @@ public class MainActivity extends AppCompatActivity {
                 if(seekBar.getProgress() == 0) {
                     seekBar.setProgress(previousVolume);
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, previousVolume, 0);
-                    muteBtn.setImageResource(R.mipmap.mute);
+                    muteBtn.setImageResource(R.mipmap.ic_volume_off_black_48dp);
                 }
                 else {
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, 0);
                     previousVolume = Integer.parseInt(percentValue.getText().toString().trim());
                     seekBar.setProgress(0);
-                    muteBtn.setImageResource(R.mipmap.volume_off);
+                    muteBtn.setImageResource(R.mipmap.ic_volume_mute_black_48dp);
                 }
             }
         });
@@ -318,9 +348,14 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
+    private CapriseStation getNextStation(CapriseStation currentStation) {
+        //TODO: return next available station
+    }
 
-    protected class MetadataTask extends AsyncTask<URL, Void, IcyStreamMeta> {
-        protected IcyStreamMeta streamMeta;
+
+
+    private class MetadataTask extends AsyncTask<URL, Void, IcyStreamMeta> {
+        private IcyStreamMeta streamMeta;
 
         @Override
         protected IcyStreamMeta doInBackground(URL... urls) {
@@ -329,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                 streamMeta.refreshMeta();
             } catch (IOException e) {
                 // TODO: Handle
-                Log.e(MetadataTask.class.toString(), e.getMessage());
+                Log.e("radio", e.getMessage());
             }
             return streamMeta;
         }
@@ -343,7 +378,7 @@ public class MainActivity extends AppCompatActivity {
                 tvSong.setText(streamMeta.getTitle());
             } catch (IOException e) {
                 // TODO: Handle
-                Log.e(MetadataTask.class.toString(), e.getMessage());
+                Log.e("radio", e.getMessage());
             }
         }
 
